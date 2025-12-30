@@ -9,14 +9,14 @@ export const runtime = "nodejs";
 export default async function PastePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/pastes/${id}`,
-    { cache: "no-store" }
-  );
+  const res = await fetch(`/api/pastes/${id}`, {
+    cache: "no-store",
+  });
+
 
   // 🔒 Defensive guard
   if (!res.ok) {

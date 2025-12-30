@@ -5,10 +5,10 @@ export const runtime = "nodejs";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await params;
-//   const now = new Date();
+  const { id } =  params;
+
 
 const testMode = process.env.TEST_MODE === "1";
 
