@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { content, ttl_seconds, max_views } = body;
 
-    // ✅ Validation
+
     if (!content || typeof content !== "string" || content.trim() === "") {
       return NextResponse.json(
         { error: "Invalid content" },
