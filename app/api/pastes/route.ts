@@ -53,9 +53,10 @@ export async function POST(req: Request) {
     const id = result.rows[0].id;
 
     return NextResponse.json({
-      id,
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/p/${id}`,
-    });
+  id,
+  url: `/p/${id}`,
+});
+
   } catch (err) {
     console.error("POST /api/pastes failed:", err);
 

@@ -1,21 +1,25 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 
 export const runtime = "nodejs";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } =  params;
+  const { id } = await params; // ✅ REQUIRED IN NEXT 16
 
+  if (!id) {
+    return NextResponse.json(
+      { error: "Invalid paste id" },
+      { status: 400 }
+    );
+  }
 
-const testMode = process.env.TEST_MODE === "1";
-
-const now = testMode
-  ? new Date(Number(req.headers.get("x-test-now-ms")))
-  : new Date();
-
+  const testMode = process.env.TEST_MODE === "1";
+  const now = testMode
+    ? new Date(Number(req.headers.get("x-test-now-ms")))
+    : new Date();
 
   const { rows } = await pool.query(
     `
